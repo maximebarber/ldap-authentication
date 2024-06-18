@@ -1,0 +1,11 @@
+// assets/styles/app.scss
+
+// Override Bootstrap variables here (optional)
+$primary: #FF5656;
+
+body {
+    padding: 50px;
+}
+
+// Import Bootstrap SCSS
+@import "~bootstrap/scss/bootstrap";

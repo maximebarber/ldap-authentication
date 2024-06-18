@@ -1,0 +1,25 @@
+{# templates/security/login.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Login 2{% endblock %}
+
+{% block body %}
+    <h1>Login</h1>
+
+    {% if error %}
+        <div class="alert alert-danger">Error: {{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <form action="{{ path('ldap_login_2') }}" method="post">
+        <div class="form-group">
+            <label for="username">Username: {{ last_username }}</label>
+            <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required autofocus>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input class="form-control" type="password" id="password" name="_password" required>
+        </div>
+        <button class="btn btn-primary" type="submit">Login</button>
+    </form>
+{% endblock %}

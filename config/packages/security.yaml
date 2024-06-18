@@ -4,14 +4,34 @@ security:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        users_in_memory: { memory: null }
+        # users_in_memory: { memory: null }
+        my_ldap:
+            ldap:
+                service: Symfony\Component\Ldap\Ldap
+                base_dn: dc=example,dc=com
+                search_dn: "cn=read-only-admin,dc=example,dc=com"
+                search_password: password
+                default_roles: ROLE_USER
+                uid_key: uid
+                # extra_fields: ['email']
+                # filter: (uid={username})
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            lazy: true
-            provider: users_in_memory
+            # lazy: true
+            # provider: users_in_memory
+            provider: my_ldap
+            form_login_ldap:
+                service: Symfony\Component\Ldap\Ldap
+                dn_string: 'uid={user_identifier},dc=example,dc=com'
+                check_path: ldap_login_2
+                login_path: ldap_login_2
+                default_target_path: app_card_stack
+            logout:
+                path: ldap_logout_2
+                target: app_card_stack
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

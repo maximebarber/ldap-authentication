@@ -1,0 +1,17 @@
+{# templates/ldap/login.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Login</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.username) }}
+        {{ form_row(form.password) }}
+        {{ form_row(form.login) }}
+    {{ form_end(form) }}
+
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+{% endblock %}
